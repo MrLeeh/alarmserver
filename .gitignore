@@ -1,0 +1,6 @@
+#ignore .pyc files
+*.pyc
+__init__.pyc
+
+#idea files
+*.idea
