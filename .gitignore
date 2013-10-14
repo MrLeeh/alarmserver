@@ -4,3 +4,7 @@ __init__.pyc
 
 #idea files
 *.idea
+
+#Documentation
+doc
+build
