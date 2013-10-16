@@ -244,10 +244,14 @@ class AlarmWord(object):
         for bit_nr in range(32):
             bit_n = bit_value(self._value, bit_nr)
             ref_n = bit_value(self._reference, bit_nr)
-            if bit_n and not ref_n:
+
+            if bit_n:
                 self.alarmserver.alarm_coming(self.offset + bit_nr)
-            elif ref_n and not bit_n:
-                self.alarmserver.alarm_going(self.offset + bit_nr)
+            else:
+                try:
+                    self.alarmserver.alarm_going(self.offset + bit_nr)
+                except AlarmNotDefinedError:
+                    pass
 
     @property
     def value(self):
