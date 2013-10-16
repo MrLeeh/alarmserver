@@ -14,4 +14,4 @@ class which implements the model/view pattern used by the Qt framework.
 So this class can be used as a model for QTableView or QListView.
 """
 
-from alarmserver import AlarmServer, Alarm
+from alarmserver import AlarmServer, Alarm, AlarmWord

@@ -2,7 +2,7 @@ from distutils.core import setup
 
 setup(
     name='alarmserver',
-    version='1.0.0',
+    version='1.0.1',
     packages=['alarmserver'],
     package_data={'alarmserver' : ['doc/*.*']},
     url='',

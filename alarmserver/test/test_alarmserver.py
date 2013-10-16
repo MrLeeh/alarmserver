@@ -59,15 +59,3 @@ class TestAlarmServer (unittest.TestCase):
 
     def test_raise_alarm_error(self):
         self.assertRaises(Exception, self.server.alarm_coming, 4)
-            
-    def test_bit_of_word(self):
-        for i in range(BIT_COUNT):
-            testword = 1<<i
-            for j in range(BIT_COUNT):
-                if j==i:                                
-                    self.assertTrue(bit_of_word(testword, j))
-                else:
-                    self.assertFalse(bit_of_word(testword, j))
-
-if __name__=="__main__":
-    unittest.main(verbosity=2)

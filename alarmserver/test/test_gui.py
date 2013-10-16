@@ -8,7 +8,7 @@ import sys
 from PyQt4.QtCore import SIGNAL
 from PyQt4.QtGui import QWidget, QTableView, QApplication, QPushButton, QVBoxLayout, QSpinBox, QGridLayout, QLabel, QComboBox
 
-from gui import AlarmServerModel
+from alarmserver.gui import AlarmServerModel
 
 
 class MainWindow(QWidget):

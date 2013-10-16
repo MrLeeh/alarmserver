@@ -1,14 +1,17 @@
 """
 Created on 23.09.2013
-@author: lehmann
+@author: Stefan Lehmann
 """
 from datetime import datetime
+
 
 SIGNAL_ALARM_RAISED = "alarmRaised(int, QString)"
 BIT_COUNT = 16
 
+
 class AlarmNotDefinedError(Exception):
     pass
+
 
 class Alarm():
     """
@@ -70,6 +73,7 @@ class Alarm():
         self.counter = 1
         self.is_acknowledged = False
         self.is_active = False
+
 
 class AlarmServer():
     """
@@ -204,9 +208,66 @@ class AlarmServer():
         return retVal
 
 
-def bit_of_word(word, index):
+class AlarmWord(object):
     """
-    @summary: returns the bit value of the word on the digit place given by index
-    """
-    return (word >> index) & 1 == 1
+    Hold the value of an alarm word and raise alarms for each alarm bit.
 
+    @type alarmserver: AlarmServer
+    @ivar alarmserver: alarm server with the define alarms
+
+    @type offset: int
+    @ivar offset: offset added to the alarm number
+
+    """
+
+    def __init__(self, alarmserver, offset=0):
+        """
+        @type alarmserver: AlarmServer
+
+        @type offset: int
+        @param offset: offset added to the alarm number
+
+        """
+
+        self.alarmserver = alarmserver
+        self._value = 0
+        self._reference = 0
+        self.offset = offset
+
+    def check(self):
+        """
+        Check alarm word for active alarms identified by their bit number.
+        Call alarm_coming function of the alarmserver for each active alarm.
+
+        """
+
+        for bit_nr in range(32):
+            bit_n = bit_value(self._value, bit_nr)
+            ref_n = bit_value(self._reference, bit_nr)
+            if bit_n and not ref_n:
+                self.alarmserver.alarm_coming(self.offset + bit_nr)
+            elif ref_n and not bit_n:
+                self.alarmserver.alarm_going(self.offset + bit_nr)
+
+    @property
+    def value(self):
+        return self._value
+
+    @value.setter
+    def value(self, value):
+        self._value = value
+        self.check()
+
+
+def bit_value(self, value, n):
+    """
+    Return value of bit n of value
+
+    @type n: int
+    @param n: bit number, starting with 0
+
+    @rtype: bool
+    @return: value of bit n
+
+    """
+    return ((value >> n) & 1) == 1
