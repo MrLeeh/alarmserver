@@ -47,7 +47,10 @@ class Alarm():
         self.counter = 1
         self.is_acknowledged = False
         self.is_active = False
-        
+
+    def __str__(self):
+        return self.text
+
     def acknowledge(self):
         """
         Acknowledge the alarm by setting time_acknowledge and the acknowledged property.
