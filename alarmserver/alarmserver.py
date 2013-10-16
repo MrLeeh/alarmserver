@@ -257,9 +257,10 @@ class AlarmWord(object):
     def value(self, value):
         self._value = value
         self.check()
+        self._reference = self._value
 
 
-def bit_value(self, value, n):
+def bit_value(value, n):
     """
     Return value of bit n of value
 
