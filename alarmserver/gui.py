@@ -43,12 +43,19 @@ class AlarmServerModel(QAbstractTableModel, AlarmServer):
             self.emit(SIGNAL("dataChanged(QModelIndex, QModelIndex)"), indexTopLeft, indexBottomRight)
 
     def acknowledge(self, alarm_nr):
+        """
+        Acknowledge the current alarm with the given number and emit a signal 'alarm_acknowledged'
+
+        """
+
         AlarmServer.acknowledge(self, alarm_nr)
         self._dataChanged_signal(alarm_nr)
+        self.emit(SIGNAL("alarm_acknowledged(int)"), alarm_nr)
 
     def acknowledge_all(self):
         self.beginResetModel()
-        AlarmServer.acknowledge_all(self)
+        for alarm in self.current_alarms:
+            self.acknowledge(alarm.alarm_nr)
         self.endResetModel()
 
     def alarm_coming(self, alarm_nr):
